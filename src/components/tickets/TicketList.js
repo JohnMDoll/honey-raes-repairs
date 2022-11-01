@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Tickets.css"
 
-export const TicketList = () => {
+export const TicketList = ({ searchTermState }) => {
     const [tickets, setTickets] = useState([])
     const [filteredTickets, setFilter] = useState([])
     const [emergency, setEmergency] = useState(false)
@@ -11,6 +11,16 @@ export const TicketList = () => {
 
     const localHoneyUser = localStorage.getItem("honey_user")
     const honeyUserObject = JSON.parse(localHoneyUser)
+
+    useEffect(
+        () => {
+            const searchedTickets = tickets.filter(ticket => {
+               return ticket.description.toLowerCase().includes(searchTermState.toLowerCase())
+            })
+            setFilter(searchedTickets)
+        },
+        [searchTermState]
+    )
     useEffect(
         () => {
             if (emergency) {
@@ -25,7 +35,7 @@ export const TicketList = () => {
     )
     useEffect(
         () => {
-            console.log("Initial state of tickets", tickets) // View the initial state of tickets
+            // console.log("Initial state of tickets", tickets) // View the initial state of tickets
             fetch(`http://localhost:8088/serviceTickets`)
                 .then(res => res.json())
                 .then((ticketArray) => {
