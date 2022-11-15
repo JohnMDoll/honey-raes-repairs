@@ -8,3 +8,11 @@
     padding: 0.7rem;
     margin: 0.5rem 0;  
 }
+footer{
+    border-top: 1px dotted darkmagenta;
+    padding-top: 5px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
